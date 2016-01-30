@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div>
+        <h2>User List</h2>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Age</th>
+                <th>Admin</th>
+                <th>Creation Date</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(users)}" th:each="user : ${users}">
+                <td th:text="${user.getId()}"><a href="/user/${user.getId()}">User Id</a></td>
+                <td th:text="${user.getName()}">Username</td>
+                <td th:text="${user.getAge()}">User Age</td>
+                <td th:text="${user.isAdmin() ? 'Yes' : 'No'}">Admin</td>
+                <td th:text="${user.getFormattedDate()}">Date</td>
+                <td><a th:href="${'/user/' + user.getId()}">View</a></td>
+                <td><a th:href="${'/user/edit/' + user.getId()}">Edit</a></td>
+                <td><a th:href="${'/user/delete/' + user.getId()}">Delete</a></td>
+            </tr>
+            <div th:if="${users.getTotalElements() == 0}" class="alert alert-info">
+                <h3>There are no users.</h3>
+            </div>
+        </table>
+
+        <nav th:if="${users.getTotalPages() > 1}">
+            <ul class="pagination">
+
+                <li th:each="page : ${#numbers.sequence(1, users.getTotalPages())}" th:class="${page == users.getNumber() + 1 ? 'active' : ''}">
+                    <a  th:href="@{${#httpServletRequest.requestURI}(page = ${page}, query = ${query})}" th:text="${page}"></a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+</head>
+<body>
+
+<div class="container">
+    <div th:fragment="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" th:href="@{/users}">Browse Users</a></li>
+                        <li><a href="#" th:href="@{/user/new}">Create New User</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" th:action="@{/users}" method="get">
+                        <input type="text" class="form-control" name="query" id="query" th:value="${query}" placeholder="Search by name..." />
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
